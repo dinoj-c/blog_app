@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Search Blog Posts</h2>
+  <form method="GET">
+    <input type="text" name="q" value="{{ query }}">
+    <button type="submit">Search</button>
+  </form>
+
+  <h2>Blog Posts</h2>
+  <ul>
+    {% for post in posts %}
+      <li><a href="{% url 'blogs:blog_post_detail' pk=post.pk %}" style="cursor: pointer;">{{ post.title }}</a> 
+        <a href="{% url 'blogs:edit_blog_post' pk=post.pk %}" style="cursor: pointer; margin-left: 50px;">Edit</a>
+        </li>
+
+        <ul>
+            {% for tag in post.tags.all %}
+              <li><a href="?tag={{ tag.slug }}">{{ tag.name }}</a></li>
+            {% endfor %}
+          </ul>
+    {% empty %}
+      <li>No blog posts available.</li>
+    {% endfor %}
+  </ul>
+
+  <h3>Filter by Tag</h3>
+  <ul>
+    <li><a href="{% url 'blogs:blog_post_list' %}">All</a></li>
+    {% for tag in tags %}
+      <li><a href="?tag={{ tag.slug }}">{{ tag.name }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

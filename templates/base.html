@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}My Django App{% endblock %}</title>
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    </head>
+    <body>
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'blogs:blog_post_list' %}">Blogs</a></li>
+                    <li><a href="{% url 'blogs:create_blog_post' %}">Create Blog</a></li>
+                    <li><a href="{% url 'blogs:blog_post_search' %}">Search Blogs</a></li>
+                    <li><a href="{% url 'blogs:notifications' %}">Notifications</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'auth_logout' %}">Logout</a></li>
+                    {% else %}
+                        <li><a href="">Login</a></li>
+                        <li><a href="">Register</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </header>
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+        <footer>
+            <!-- <p>&copy; 2023 My Blog App. All rights reserved.</p> -->
+        </footer>
+    </body>
+</html>
